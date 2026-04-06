@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="it">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="color-scheme" content="dark">
+	<title>Ricevi denaro</title>
+	<style>
+		:root {
+			color-scheme: dark;
+			--bg: #0b0d10;
+			--bg-2: #11151b;
+			--card: rgba(18, 22, 29, 0.88);
+			--card-border: rgba(255, 255, 255, 0.08);
+			--text: #f4f7fb;
+			--muted: #9aa4b2;
+			--accent: #8bd3ff;
+			--accent-2: #66f2c2;
+			--shadow: 0 24px 80px rgba(0, 0, 0, 0.45);
+			--radius: 24px;
+		}
+
+		* {
+			box-sizing: border-box;
+		}
+
+		html, body {
+			margin: 0;
+			min-height: 100%;
+		}
+
+		body {
+			font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+			color: var(--text);
+			background:
+				radial-gradient(circle at top, rgba(102, 242, 194, 0.12), transparent 34%),
+				radial-gradient(circle at 80% 15%, rgba(139, 211, 255, 0.10), transparent 30%),
+				linear-gradient(180deg, var(--bg-2), var(--bg));
+			display: grid;
+			place-items: center;
+			padding: 24px;
+		}
+
+		.shell {
+			width: 100%;
+			max-width: 520px;
+		}
+
+		.hero {
+			padding: 28px 24px 18px;
+			text-align: center;
+		}
+
+		h1 {
+			margin: 0;
+			font-size: clamp(1.7rem, 4vw, 2.35rem);
+			line-height: 1.05;
+			letter-spacing: -0.04em;
+		}
+
+		.subtitle {
+			margin: 12px auto 0;
+			max-width: 36ch;
+			color: var(--muted);
+			font-size: 0.98rem;
+			line-height: 1.55;
+		}
+
+		.panel {
+			margin-top: 18px;
+			padding: 20px;
+			border-radius: var(--radius);
+			background: var(--card);
+			border: 1px solid var(--card-border);
+			box-shadow: var(--shadow);
+			backdrop-filter: blur(18px);
+		}
+
+		.section-label {
+			margin: 0 0 14px;
+			color: var(--muted);
+			font-size: 0.82rem;
+			text-transform: uppercase;
+			letter-spacing: 0.16em;
+		}
+
+		.links {
+			display: grid;
+			gap: 12px;
+		}
+
+		.link-card {
+			appearance: none;
+			border: 1px solid rgba(255, 255, 255, 0.07);
+			cursor: pointer;
+			text-align: left;
+			display: flex;
+			align-items: center;
+			gap: 14px;
+			width: 100%;
+			padding: 16px 18px;
+			border-radius: 18px;
+			color: inherit;
+			text-decoration: none;
+			font: inherit;
+			background: rgba(255, 255, 255, 0.03);
+			transition: transform 160ms ease, border-color 160ms ease, background 160ms ease;
+		}
+
+		.link-card:hover,
+		.link-card:focus-visible {
+			transform: translateY(-2px);
+			border-color: rgba(139, 211, 255, 0.35);
+			background: rgba(255, 255, 255, 0.06);
+			outline: none;
+		}
+
+		.link-card.is-copied {
+			border-color: rgba(102, 242, 194, 0.45);
+			background: rgba(102, 242, 194, 0.08);
+		}
+
+		.icon {
+			width: 46px;
+			height: 46px;
+			border-radius: 14px;
+			display: grid;
+			place-items: center;
+			flex: none;
+			font-weight: 700;
+			color: #071018;
+			background: linear-gradient(135deg, var(--accent), var(--accent-2));
+		}
+
+		.icon--paypal {
+			color: #ffffff;
+			background: linear-gradient(135deg, #003087, #009cde);
+		}
+
+		.icon--revolut {
+			color: #f4f7fb;
+			background: linear-gradient(135deg, #191c1f, #2d3238);
+		}
+
+		.icon--satispay {
+			color: #ffffff;
+			background: linear-gradient(135deg, #ff5b3f, #ff7a3d);
+		}
+
+		.icon--fineco {
+			color: #FDC82F;
+			background: #00549F;
+		}
+
+		.copy {
+			flex: 1;
+			min-width: 0;
+		}
+
+		.title-row {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			gap: 12px;
+			margin-bottom: 3px;
+		}
+
+		.title-row strong {
+			font-size: 1rem;
+			letter-spacing: -0.02em;
+		}
+
+		.badge {
+			padding: 5px 10px;
+			border-radius: 999px;
+			font-size: 0.75rem;
+			color: #d9f5ea;
+			background: rgba(102, 242, 194, 0.12);
+			border: 1px solid rgba(102, 242, 194, 0.18);
+			white-space: nowrap;
+		}
+
+		.copy p {
+			margin: 0;
+			color: var(--muted);
+			font-size: 0.92rem;
+			line-height: 1.45;
+		}
+
+		@media (max-width: 480px) {
+			body {
+				padding: 14px;
+			}
+
+			.hero {
+				padding-inline: 10px;
+			}
+
+			.panel {
+				padding: 16px;
+				border-radius: 20px;
+			}
+
+			.link-card {
+				padding: 14px 14px;
+			}
+
+			.title-row {
+				flex-direction: column;
+				align-items: flex-start;
+				gap: 6px;
+			}
+		}
+	</style>
+</head>
+<body>
+	<main class="shell">
+		<section class="hero" aria-labelledby="page-title">
+			<h1 id="page-title">Ricevi denaro</h1>
+			<p class="subtitle">Scegli la piattaforma che preferisci per inviarmi un pagamento.</p>
+		</section>
+
+		<section class="panel" aria-label="Piattaforme di pagamento">
+			<p class="section-label">Piattaforme</p>
+			<div class="links">
+				<a class="link-card" href="https://paypal.me/halleksz" target="_blank" rel="noreferrer" aria-label="Apri il link PayPal">
+					<div class="icon icon--paypal">P</div>
+					<div class="copy">
+						<div class="title-row">
+							<strong>PayPal</strong>
+							<span class="badge">Link</span>
+						</div>
+						<p>paypal.me/halleksz</p>
+					</div>
+				</a>
+
+				<a class="link-card" href="https://revolut.me/aperinik" target="_blank" rel="noreferrer" aria-label="Apri il link Revolut">
+					<div class="icon icon--revolut">R</div>
+					<div class="copy">
+						<div class="title-row">
+							<strong>Revolut</strong>
+							<span class="badge">Link</span>
+						</div>
+						<p>revolut.me/aperinik</p>
+					</div>
+				</a>
+
+				<a class="link-card" href="https://www.satispay.com/" target="_blank" rel="noreferrer" aria-label="Contatto Satispay">
+					<div class="icon icon--satispay">S</div>
+					<div class="copy">
+						<div class="title-row">
+							<strong>Satispay</strong>
+							<span class="badge">Contatto</span>
+						</div>
+						<p>@paleale</p>
+					</div>
+				</a>
+
+				<button class="link-card" type="button" data-copy-value="IT44Q0301503200000006038589" aria-label="Copia l'IBAN Fineco negli appunti">
+					<div class="icon icon--fineco">F</div>
+					<div class="copy">
+						<div class="title-row">
+							<strong>Fineco</strong>
+							<span class="badge">Copia IBAN</span>
+						</div>
+						<p>IT44Q0301503200000006038589</p>
+					</div>
+				</button>
+			</div>
+		</section>
+
+	</main>
+
+	<script>
+		const copyButton = document.querySelector('[data-copy-value]');
+
+		if (copyButton) {
+			const badge = copyButton.querySelector('.badge');
+			const originalBadgeText = badge ? badge.textContent : '';
+			const originalAriaLabel = copyButton.getAttribute('aria-label') || '';
+
+			const writeClipboard = async (value) => {
+				if (navigator.clipboard && window.isSecureContext) {
+					await navigator.clipboard.writeText(value);
+					return;
+				}
+
+				const fallbackInput = document.createElement('textarea');
+				fallbackInput.value = value;
+				fallbackInput.setAttribute('readonly', '');
+				fallbackInput.style.position = 'fixed';
+				fallbackInput.style.opacity = '0';
+				document.body.appendChild(fallbackInput);
+				fallbackInput.select();
+				document.execCommand('copy');
+				document.body.removeChild(fallbackInput);
+			};
+
+			const setCopiedState = () => {
+				copyButton.classList.add('is-copied');
+				if (badge) {
+					badge.textContent = 'Copiato';
+				}
+				copyButton.setAttribute('aria-label', 'IBAN copiato negli appunti');
+
+				window.setTimeout(() => {
+					copyButton.classList.remove('is-copied');
+					if (badge) {
+						badge.textContent = originalBadgeText;
+					}
+					copyButton.setAttribute('aria-label', originalAriaLabel);
+				}, 1600);
+			};
+
+			copyButton.addEventListener('click', async () => {
+				const value = copyButton.getAttribute('data-copy-value');
+
+				if (!value) {
+					return;
+				}
+
+				try {
+					await writeClipboard(value);
+					setCopiedState();
+				} catch (error) {
+					console.error('Impossibile copiare l\'IBAN:', error);
+				}
+			});
+		}
+	</script>
+</body>
+</html>
