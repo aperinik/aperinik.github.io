@@ -1,0 +1,28 @@
+/*
+ * Tailwind owns the layout and visual utilities in index.html.
+ * These semantic text classes keep repeated typography easy to edit in one place.
+ * The utility classes stay in the markup so the CDN prototype works without a build.
+ */
+@layer components {
+	.text-name,
+	.text-role,
+	.text-link {
+		@apply leading-tight;
+	}
+
+	.text-body {
+		@apply text-sm leading-relaxed;
+	}
+
+	.text-section {
+		@apply text-xs font-semibold;
+	}
+
+	.text-item-title {
+		@apply text-sm font-semibold;
+	}
+
+	.text-muted {
+		@apply text-gray-500;
+	}
+}
